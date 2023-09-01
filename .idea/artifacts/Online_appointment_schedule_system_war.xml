@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Online_appointment_schedule_system:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Online_appointment_schedule_system</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Online_appointment_schedule_system-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Online_appointment_schedule_system:war exploded" />
+    </root>
+  </artifact>
+</component>
