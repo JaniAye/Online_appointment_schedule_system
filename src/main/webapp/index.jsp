@@ -133,6 +133,133 @@
         .button-container {
             margin-top: auto;
         }
+         .what-we-do {
+             margin-top: 30px;
+             text-align: center;
+             background-color: #F5F5F5;
+
+         }
+
+        .what-we-do h2 {
+            color: #000080;
+            background-color: #F5F5F5;
+        }
+
+        .innerSection3-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .innerSection3 {
+            height: 350px;
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            flex: 0 0 calc(33.33% - 40px);
+        }
+
+        .icon-container {
+            background-color: #ffffff;
+            border-radius: 50%;
+            width: 210px;
+            height: 210px;
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .icon-container img {
+
+            width: 310px;
+            height: auto;
+        }
+
+        .innerH3 {
+            margin-top: 15px;
+            background-color: #F5F5F5;
+            color: #333333;
+            font-size: 24px;
+        }
+
+        .innerParagraph {
+            margin-top: 5px;
+            background-color: #F5F5F5;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        footer {
+            margin-top: 60px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer h2 {
+            background-color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            background-color: #333;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        footer ul {
+            background-color: #333;
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            background-color: #333;
+            margin-bottom: 5px;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+
+        .social-icons {
+            background-color: #333;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            font-size: 24px;
+        }
+
+        .icon-container-last {
+            background-color: #ffffff;
+            border-radius: 50%;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .icon-container-last img {
+
+            width: 260px;
+            height: auto;
+        }
+
+
     </style>
 </head>
 <body>
@@ -175,11 +302,11 @@
         and delivering on-demand reports to facilitate efficient decision-making for both job seekers and management.
     </p>
     <div class="centered-box">
-        <h2 style="background-color:  #f5f5f5">CONSULTING</h2>
+        <h2 style="background-color:  #f5f5f5; ">CONSULTING</h2>
         <div class="icon" style="background-color:  #f5f5f5">
-            <img src="assests/icon-consulting-light.png" alt="Description of the icon">
+            <img src="assests/icon_consulting.png" alt="Description of the icon">
         </div>
-        <p style="margin-top: 25px ; background-color:  #f5f5f5">You can simply Schedule Consultation <br> for FREE. Press bellow button<br>for schedule a time.</p>
+        <p style="margin-top: 25px ; background-color:  #f5f5f5; font-size: 18px">You can simply Schedule Consultation <br> for FREE. Press bellow button<br>for schedule a time.</p>
         <div class="button-container" style="background-color:  #f5f5f5">
             <button>Consult Now</button>
         </div>
@@ -187,13 +314,63 @@
 </div>
 
 <div class="section section4">
-    <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend tortor eget justo lacinia, in euismod purus suscipit. Vivamus at condimentum massa.</p>
+    <div class="innerSec3" >
+        <h1 style="color: #000080">Our Work Process</h1>
+    </div>
+    <div class="what-we-do">
+        <div class="innerSection3-container">
+            <div class="innerSection3">
+                <div class="icon-container">
+                    <img src="assests/consultant_set.jpg" alt="Icon 1">
+                </div>
+                <h3  class="innerH3">Expert Consultation</h3>
+                <p class="innerParagraph">We offer expert consultation services to job seekers...</p>
+            </div>
+            <div class="innerSection3">
+                <div class="icon-container">
+                    <img src="assests/shedule.jpg" alt="Icon 2">
+                </div>
+                <h3 class="innerH3">Flexible Scheduling</h3>
+                <p class="innerParagraph">Our flexible scheduling options make it easy for you to...</p>
+            </div>
+            <div class="innerSection3">
+                <div class="icon-container">
+                    <img src="assests/online.jpg" alt="Icon 3">
+                </div>
+                <h3  class="innerH3">Online Convenience</h3>
+                <p class="innerParagraph">Our web-based system enables convenient online...</p>
+            </div>
+        </div>
+    </div>
 
 </div>
 
-<div class="section section5">
-    <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend tortor eget justo lacinia, in euismod purus suscipit. Vivamus at condimentum massa.</p>
+<div class="section section5" style="text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px">
 
+     <div class="icon-container-last">
+        <img src="assests/call.jpg" alt="">
+    </div>
+
+    <p style="margin: 20px; font-size: 25px">
+        Looking for assistance? Reach out to our 24/7 call center for expert support. Call us at <strong style="color: #FF5733;">+94 011 2587 468</strong> for immediate help. Our physical locations at 3rd floor 400, D.R. Wijewardena Mawatha Colombo 10, Sri Lanka, have specific operating hours. We're here to serve you round the clock through our call center.
+    </p>
 </div>
+
+
+<footer>
+    <div style="background-color: #333333 ">
+        <h1 style="background-color: #333333" >Contact Us</h1>
+        <p>Email: contact@yourwebsite.com</p>
+        <p>Phone: +123-456-7890</p>
+    </div>
+
+    <div class="social-icons">
+        <h2>Follow Us</h2>
+
+        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
 </body>
 </html>
