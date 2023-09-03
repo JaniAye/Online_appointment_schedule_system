@@ -105,7 +105,7 @@
         }
         .styled-dropdown {
             padding: 10px;
-            font-size: 16px;
+            font-size: 14px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #fff;
@@ -232,9 +232,9 @@
             <select id="job-category3" class="styled-dropdown">
                 <option value="all"  selected>--- Select ---</option>
                 <option value="all" >8.00 a.m. - 10.00 a.m</option>
-                <option value="all" >10.00 a.m. - 12.00 a.m</option>
-                <option value="all" >1.00 a.m. - 3.00 a.m</option>
-                <option value="all" >3.00 a.m. - 5.00 a.m</option>
+                <option value="all" >10.00 a.m. - 12.00 p.m</option>
+                <option value="all" >1.00 p.m. - 3.00 p.m</option>
+                <option value="all" >3.00 p.m. - 5.00 p.m</option>
             </select>
         </div>
     </div>
@@ -243,7 +243,7 @@
             <h2 style="color: #000080">Scheduling an appointment </h2>
         </div>
         <div>
-            <div class="label-and-dropdown"  style=" margin-top: 3%">
+            <div class="label-and-dropdown"  style=" margin-top: 2%">
                 <label for="job-category" class="label" style="width: 160px">User Name  :  </label>
                 <input type="text"   class="inputFields" style="width: 230px" >
             </div>
