@@ -24,12 +24,17 @@
     <div class="forgot-pass">
       <a href="#">Forgot Password?</a>
     </div>
-    <button class="button">Sign in</button>
+    <button class="button" id="btnSign">Sign in</button>
     <div class="sign-up">
       Not a member?
       <a href="registration.jsp">signup now</a>
     </div>
   </form>
 </div>
+  <script>
+    document.getElementById("btnSign").addEventListener("click", function() {
+      window.location.href = "dashboard.jsp";
+    });
+  </script>
 </body>
 </html>
