@@ -124,15 +124,48 @@
             display: inline-block;
             margin-bottom: 10px;
         }
+        .btn_schedule  {
+            margin-left: 7%;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
 
+        #btnAppoiment{
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #000080;
+            color: white;
+            border-radius: 6px;
+        }
+        #btnAppoimentContainer{
 
+            display: flex;
+            justify-content: space-evenly;
+            margin-left: 30px ;
+            width: 700px;
+        }
         .label {
             font-weight: bold;
         }
 
+        .inputFields {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        .button-container {
+            margin-top: auto;
+        }
 
-
-
+        .appointmentHeadTxt{
+            margin-left: 7%;
+        }
 
     </style>
 
@@ -192,34 +225,33 @@
         <div class="label-and-dropdown">
             <label for="job-category" class="label">Select Date:</label>
                 <i class="far fa-calendar-alt"></i>
-                <input type="date" id="sec-datepicker-input"  class="styled-dropdown" > <!-- class="sec-custom-datepicker" -->
+                <input type="date" id="sec-datepicker-input"  class="styled-dropdown" >
          </div>
         <div class="label-and-dropdown">
             <label for="job-category" class="label">Select time slot</label>
             <select id="job-category3" class="styled-dropdown">
-                <option value="all" selected>8.00 a.m. - 10.00 a.m</option>
-                <option value="all" selected>10.00 a.m. - 12.00 a.m</option>
-                <option value="all" selected>1.00 a.m. - 3.00 a.m</option>
-                <option value="all" selected>3.00 a.m. - 5.00 a.m</option>
+                <option value="all"  selected>--- Select ---</option>
+                <option value="all" >8.00 a.m. - 10.00 a.m</option>
+                <option value="all" >10.00 a.m. - 12.00 a.m</option>
+                <option value="all" >1.00 a.m. - 3.00 a.m</option>
+                <option value="all" >3.00 a.m. - 5.00 a.m</option>
             </select>
         </div>
     </div>
     <div class="appointment-ui">
+        <div class="appointmentHeadTxt" >
+            <h2 style="color: #000080">Scheduling an appointment </h2>
+        </div>
         <div>
-            <div class="label-and-dropdown"  style=" margin-top: 5%">
+            <div class="label-and-dropdown"  style=" margin-top: 3%">
                 <label for="job-category" class="label" style="width: 160px">User Name  :  </label>
-                <select id="job-category4" class="styled-dropdown" style="width: 190px">
-                    <option value="all" selected>8.00 a.m. - 10.00 a.m</option>
-                    <option value="all" selected>10.00 a.m. - 12.00 a.m</option>
-                    <option value="all" selected>1.00 a.m. - 3.00 a.m</option>
-                    <option value="all" selected>3.00 a.m. - 5.00 a.m</option>
-                </select>
+                <input type="text"   class="inputFields" style="width: 230px" >
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Job category :</label>
-                <select id="job-category2" class="styled-dropdown" style="width: 190px">
+                <select id="job-category2" class="styled-dropdown" style="width: 230px">
                     <option value="all" selected>ALL</option>
                     <option value="it">Information Technology</option>
                     <option value="healthcare">Healthcare</option>
@@ -245,22 +277,40 @@
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Schedule Date :</label>
                 <i class="far fa-calendar-alt"></i>
-                <input type="date" id="sec-datepicker-input8"  class="styled-dropdown" style="width: 190px" >
+                <input type="date" id="sec-datepicker-input8"  class="styled-dropdown" style="width: 230px" >
+            </div>
+        </div>
+        <div>
+            <div class="label-and-dropdown">
+                <label for="job-category" class="label" style="width: 160px">Time Slot :</label>
+                <i class="far fa-calendar-alt"></i>
+                <select id="" class="styled-dropdown" style="width: 230px">
+                    <option value="all" selected>- Select -</option>
+                    <option value="all" >8.00 a.m. - 10.00 a.m</option>
+                    <option value="all" >10.00 a.m. - 12.00 p.m</option>
+                    <option value="all" >1.00 p.m. - 3.00 p.m</option>
+                    <option value="all" >3.00 p.m. - 5.00 p.m</option>
+                </select>
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Consultant Name :</label>
-                <input type="date"   class="styled-dropdown" style="width: 190px" >
+                <input type="text"   class="inputFields" style="width: 230px" >
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Status :</label>
-                <input type="date" id="sec-datepicker-input9"  class="styled-dropdown" style="width: 190px" >
+                <input type="text"   class="inputFields" style="width: 230px" >
             </div>
         </div>
+        <div id="btnAppoimentContainer">
+            <a href="login.jsp" id="btnAppoiment" >Schedule Appointment</a>
+        </div>
+
     </div>
+
 
     <!-- Profile UI -->
     <div class="profile-ui">
