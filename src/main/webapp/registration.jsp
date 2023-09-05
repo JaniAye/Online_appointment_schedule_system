@@ -28,7 +28,7 @@
                     password: document.getElementById("pass").value
                 },
                 success: function(response) {
-                    console.log(response.result+" --");
+                    console.log(response.result+" - aaaaaaaaaaa -");
                     if (response.result === "empty"){
                         alert("Please provide all details...");
                     }
@@ -36,7 +36,7 @@
                         alert("Registered unSuccessful...");
                     }
                     if (response.result === "success"){
-                        alert("Registered Successfully...");
+                        alert("Customer Registration Successfully...");
                         window.location.href = "index.jsp";
                     }
                 },

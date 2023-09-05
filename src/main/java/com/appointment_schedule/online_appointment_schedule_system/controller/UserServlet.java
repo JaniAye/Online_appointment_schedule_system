@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.appointment_schedule.online_appointment_schedule_system.util.EncryptPassword.encryptPassword;
+
 @WebServlet(name = "User", value = "/User")
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -36,17 +38,38 @@ public class UserServlet extends HttpServlet {
         Map<String, Object> responseObject = new HashMap<>();
         Gson gson = new Gson();
         response.setContentType("application/json");
-        try {
-            insertUser(request, response);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        String emilOrphn = request.getParameter("emailOrPhone");
+        String name = request.getParameter("name");
+        String nic = request.getParameter("nic");
+        String dob = request.getParameter("dob");
+        String password = request.getParameter("password");
+        String dateString = "2023-09-01";
+
+        if (emilOrphn==null || name==null || nic==null || dob==null || password==null){
+            responseObject.put("result", "empty");
+            String jsonResponse = gson.toJson(responseObject);
+            response.getWriter().write(jsonResponse);
+        }else {
+            String hashedPass =encryptPassword(password);
+
+            RequestDispatcher  dispatcher=request.getRequestDispatcher("index.jsp");
+
+            try {
+                insertUser(request, response);
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            responseObject.put("result", "success");
+
+            String jsonResponse = gson.toJson(responseObject);
+            response.getWriter().write(jsonResponse);
+
         }
-        responseObject.put("result", "success");
-        String jsonResponse = gson.toJson(responseObject);
-        response.getWriter().write(jsonResponse);
         // doGet(request, response);
     }
 
@@ -119,9 +142,9 @@ public class UserServlet extends HttpServlet {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println(emilOrphn+" : "+name+" ---- "+nic+"  / "+dob+ " pa "+password);;
         Date date = new Date(dateFormat.parse(dateString).getTime());
-        UserEntity newUser = new UserEntity(nic,name,date,"user",emilOrphn,password,"");
+        String hashedPass =encryptPassword(password);
+        UserEntity newUser = new UserEntity(nic,name,date,"user",emilOrphn,hashedPass,"");
         userDao.saveUser(newUser);
-        response.sendRedirect("list");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)
@@ -142,4 +165,5 @@ public class UserServlet extends HttpServlet {
         userDao.deleteUser(id);
         response.sendRedirect("list");
     }
+
 }

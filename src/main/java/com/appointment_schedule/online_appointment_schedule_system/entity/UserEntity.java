@@ -33,6 +33,11 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    public UserEntity(String emailOrPhone, String password) {
+        this.emailOrPhone = emailOrPhone;
+        this.password = password;
+    }
+
     public UserEntity(String nic, String name, Date dob, String type, String emailOrPhone, String password, String field) {
         this.nic = nic;
         this.name = name;

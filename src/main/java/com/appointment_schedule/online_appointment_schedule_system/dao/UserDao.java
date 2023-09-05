@@ -4,6 +4,12 @@ import com.appointment_schedule.online_appointment_schedule_system.entity.UserEn
 import com.appointment_schedule.online_appointment_schedule_system.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -102,6 +108,31 @@ public class UserDao {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public UserEntity getLogin(UserEntity user){
+
+        Transaction transaction = null;
+        UserEntity userRet = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            String hql = "FROM UserEntity WHERE emailOrPhone = :email AND password = :password";
+            Query<UserEntity> query = session.createQuery(hql, UserEntity.class);
+            query.setParameter("email", user.getEmailOrPhone());
+            query.setParameter("password", user.getPassword());
+
+            userRet = query.uniqueResult();
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return userRet;
     }
 
     /**
