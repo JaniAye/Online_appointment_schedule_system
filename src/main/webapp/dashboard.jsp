@@ -5,6 +5,10 @@
   Time: 21:51
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    String userName = (String) session.getAttribute("userName");
+
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+
     <style>
 
         * {
@@ -168,7 +173,7 @@
         }
 
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -245,14 +250,14 @@
         <div>
             <div class="label-and-dropdown"  style=" margin-top: 2%">
                 <label for="job-category" class="label" style="width: 160px">User Name  :  </label>
-                <input type="text"   class="inputFields" style="width: 230px" >
+                <input type="text" id="txtUn"   class="inputFields" style="width: 230px" value="<%= userName %>" readonly>
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Job category :</label>
                 <select id="job-category2" class="styled-dropdown" style="width: 230px">
-                    <option value="all" selected>ALL</option>
+                    <option value="all" selected>-- Select --</option>
                     <option value="it">Information Technology</option>
                     <option value="healthcare">Healthcare</option>
                     <option value="engineering">Engineering</option>
@@ -277,36 +282,38 @@
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Schedule Date :</label>
                 <i class="far fa-calendar-alt"></i>
-                <input type="date" id="sec-datepicker-input8"  class="styled-dropdown" style="width: 230px" >
+                <input type="date" id="sec-datepicker-input8" id="txtSheduleDt" class="styled-dropdown" style="width: 230px"
+                       min="<%= java.time.LocalDate.now().plusDays(3) %>" max="<%= java.time.LocalDate.now().plusDays(365) %>"
+                       oninput="validateDateInput(this)">
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Time Slot :</label>
                 <i class="far fa-calendar-alt"></i>
-                <select id="" class="styled-dropdown" style="width: 230px">
+                <select id="txtSlot" class="styled-dropdown" style="width: 230px" onclick="changeStatus()">
                     <option value="all" selected>- Select -</option>
-                    <option value="all" >8.00 a.m. - 10.00 a.m</option>
-                    <option value="all" >10.00 a.m. - 12.00 p.m</option>
-                    <option value="all" >1.00 p.m. - 3.00 p.m</option>
-                    <option value="all" >3.00 p.m. - 5.00 p.m</option>
+                    <option value="val1" >8.00 a.m. - 10.00 a.m</option>
+                    <option value="val2" >10.00 a.m. - 12.00 p.m</option>
+                    <option value="val3" >1.00 p.m. - 3.00 p.m</option>
+                    <option value="val4" >3.00 p.m. - 5.00 p.m</option>
                 </select>
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Consultant Name :</label>
-                <input type="text"   class="inputFields" style="width: 230px" >
+                <input type="text"  id="txtConsultName" class="inputFields" style="width: 230px" readonly>
             </div>
         </div>
         <div>
             <div class="label-and-dropdown">
                 <label for="job-category" class="label" style="width: 160px">Status :</label>
-                <input type="text"   class="inputFields" style="width: 230px" >
+                <input type="text" id="txtStatus"  class="inputFields" style="width: 230px" readonly>
             </div>
         </div>
         <div id="btnAppoimentContainer">
-            <a href="login.jsp" id="btnAppoiment" >Schedule Appointment</a>
+            <button  id="btnAppoiment" onclick="createAppointment()" >Schedule Appointment</button>
         </div>
 
     </div>
@@ -325,8 +332,6 @@
     </div>
 </div>
 
-<!-- JavaScript for navigation -->
-<!-- JavaScript for navigation -->
 <script>
     const dashboardButton = document.getElementById('dashboard-button');
     const profileButton = document.getElementById('profile-button');
@@ -337,7 +342,107 @@
     const profileUI = document.querySelector('.profile-ui');
     const settingsUI = document.querySelector('.settings-ui');
     const appointmentUI = document.querySelector('.appointment-ui');
+    window.history.pushState(null, null, "dashboard.jsp");
 
+    function changeStatus(){
+
+        document.getElementById("txtStatus").value="Pending";
+        $.ajax({
+            url: "User",
+            type: "GET",
+            data: {
+                category:  document.getElementById("job-category2").value,
+                date:  document.getElementById("sec-datepicker-input8").value,
+                slot :  document.getElementById("txtSlot").value,
+                getType :  "Consultant"
+            },
+            success: function(response) {
+
+                if (response.result === "empty"){
+                    alert("Please provide all details...");
+                }
+                if (response.result === "fail"){
+                    alert("Request unSuccessful...");
+                }
+                if (response.result === "success"){
+                    const userName = response.userNameCons;
+                    if(userName===''){
+                        alert("There are no available consultants at this moment...");
+                    }
+                    document.getElementById("txtConsultName").value = userName;
+                }
+            },
+            error: function() {
+                //showAlert("An error occurred while processing the request.");
+            }
+        });
+
+    }
+    function validateDateInput(input) {
+        const selectedDate = new Date(input.value);
+        const minDate = new Date(input.min);
+        const maxDate = new Date(input.max);
+
+        if (selectedDate < minDate || selectedDate > maxDate) {
+            // Reset the input field
+            input.value = '';
+            alert('Please select a date that is at least 3 days from the current date.');
+
+        }
+    }
+
+    function createAppointment(){
+        var cons=document.getElementById("txtConsultName").value ;
+        if(cons===''){
+            alert("There are no available consultants at this moment...");
+           document.getElementById("txtUn").value='<%= userName %>';
+               document.getElementById("job-category2").value = 'all';
+               document.getElementById("sec-datepicker-input8").value='';
+            document.getElementById("txtSlot").value='all';
+              document.getElementById("txtConsultName").value='';
+                document.getElementById("txtStatus").value='';
+
+
+        }else{
+            $.ajax({
+                url: "Appointment",
+                type: "POST",
+                data: {
+                    userName:  document.getElementById("txtUn").value,
+                    category:  document.getElementById("job-category2").value,
+                    date:  document.getElementById("sec-datepicker-input8").value,
+                    slot :  document.getElementById("txtSlot").value,
+                    consult: document.getElementById("txtConsultName").value,
+                    status: document.getElementById("txtStatus").value
+                },
+                success: function(response) {
+
+                    if (response.result === "empty"){
+                        alert("Please provide all details...");
+                    }
+                    if (response.result === "fail"){
+                        alert("Request unSuccessful...");
+                    }
+                    if (response.result === "success"){
+                        alert("Appointment Requested Successfully...");
+                        document.getElementById("txtUn").value='<%= userName %>';
+                        document.getElementById("job-category2").value = 'all';
+                        document.getElementById("sec-datepicker-input8").value='';
+                        document.getElementById("txtSlot").value='all';
+                        document.getElementById("txtConsultName").value='';
+                        document.getElementById("txtStatus").value='';
+                    }
+                },
+                error: function() {
+                    //showAlert("An error occurred while processing the request.");
+                }
+            });
+
+        }
+
+
+
+    }
 
     dashboardButton.addEventListener('click', () => {
         dashboardUI.style.display = 'block';

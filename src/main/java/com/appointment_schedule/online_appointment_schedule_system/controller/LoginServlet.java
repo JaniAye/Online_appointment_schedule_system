@@ -28,23 +28,27 @@ public class LoginServlet extends HttpServlet {
         String hashedPass = encryptPassword(password);
         UserEntity user = new UserEntity(userName, hashedPass);
         UserEntity login = new UserDao().getLogin(user);
-        HttpSession session= request.getSession();
-        RequestDispatcher dispatcher=null;
+        HttpSession session = request.getSession();
 
-        if (login!=null){
-            session.setAttribute("userName",login);
-            request.setAttribute("status","success");
-            if (login.getType().equalsIgnoreCase("user"))
-                 dispatcher= request.getRequestDispatcher("dashboard.jsp");
-            else if (login.getType().equalsIgnoreCase("consultant"))
-                dispatcher= request.getRequestDispatcher("consultantDashboard.jsp");
-            else
-                dispatcher= request.getRequestDispatcher("adminDashboard.jsp");
-        }else {
-            request.setAttribute("status","fail");
-            dispatcher= request.getRequestDispatcher("login.jsp");
+        if (login != null) {
+            session.setAttribute("userName", login.getName());
+            request.setAttribute("status", "success");
+            String redirectURL;
 
+            if (login.getType().equalsIgnoreCase("user")) {
+                redirectURL = "dashboard.jsp";
+            } else if (login.getType().equalsIgnoreCase("consultant")) {
+                redirectURL = "consultantDashboard.jsp";
+            } else {
+                redirectURL = "adminDashboard.jsp";
+            }
+
+            // Redirect to the specified dashboard
+            response.sendRedirect(redirectURL);
+        } else {
+            request.setAttribute("status", "fail");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
         }
-        dispatcher.forward(request,response);
     }
 }

@@ -2,10 +2,13 @@ package com.appointment_schedule.online_appointment_schedule_system.dao;
 
 import com.appointment_schedule.online_appointment_schedule_system.entity.UserEntity;
 import com.appointment_schedule.online_appointment_schedule_system.util.HibernateUtil;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.persistence.NoResultException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +28,8 @@ public class UserDao {
             // start a transaction
             transaction = session.beginTransaction();
             // save the student object
-            session.save(user);
+            Serializable save = session.save(user);
+
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -110,6 +114,38 @@ public class UserDao {
         return user;
     }
 
+    public UserEntity getUserNic(UserEntity user) {
+
+        Transaction transaction = null;
+        UserEntity user2 = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            String sqlQuery = "SELECT * FROM user WHERE type = 'consultant' AND field = :consultantField ORDER BY RAND() LIMIT 1";
+            SQLQuery<UserEntity> query = session.createNativeQuery(sqlQuery, UserEntity.class);
+
+            query.setParameter("consultantField", user.getField());
+
+            // Execute the query
+            user2 = query.uniqueResult();
+
+
+            // commit transaction
+            transaction.commit();
+        }catch (NoResultException e) {
+            // Handle the case where no data is found
+            // For example, show an alert or log a message
+            System.out.println("No data found for the given criteria.");
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user2;
+    }
+
     public UserEntity getLogin(UserEntity user){
 
         Transaction transaction = null;
@@ -161,4 +197,35 @@ public class UserDao {
         }
         return listOfUser;
     }
+
+    public  List<UserEntity> getAllApps(String name) {
+
+        Transaction transaction = null;
+        List<UserEntity> listOfUser = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            System.out.println("awaaa--7888888----------*/**/*/");
+
+            String sqlQuery = "SELECT * FROM appointment WHERE status = 'Pending' AND consultant_name = :consultantName ";
+            SQLQuery<UserEntity> query = session.createNativeQuery(sqlQuery, UserEntity.class);
+
+            query.setParameter("consultantName", name);
+
+            // Execute the query
+             listOfUser = query.getResultList();
+            System.out.println("--------------+++89");
+
+
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return listOfUser;
+    }
+
 }

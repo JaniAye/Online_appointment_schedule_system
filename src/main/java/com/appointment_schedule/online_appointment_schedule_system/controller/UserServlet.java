@@ -72,37 +72,39 @@ public class UserServlet extends HttpServlet {
         }
         // doGet(request, response);
     }
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
+        Map<String, Object> responseObject = new HashMap<>();
+        Gson gson = new Gson();
+        response.setContentType("application/json");
 
-        try {
-            switch (action) {
-                case "/new":
-                    showNewForm(request, response);
-                    break;
-                case "/insert":
-                    insertUser(request, response);
-                    break;
-                case "/delete":
-                    deleteUser(request, response);
-                    break;
-                case "/edit":
-                    showEditForm(request, response);
-                    break;
-                case "/update":
-                    updateUser(request, response);
-                    break;
-                default:
-                    listUser(request, response);
-                    break;
-            }
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+
+        String getType = request.getParameter("getType");
+        if (getType.equals("Consultant")){
+            String category = request.getParameter("category");
+            String date = request.getParameter("date");
+            String slot = request.getParameter("slot");
+
+            UserEntity user = new UserEntity(category);
+            UserEntity userName = userDao.getUserNic(user);
+
+            responseObject.put("result", "success");
+            responseObject.put("userNameCons", userName.getName());
         }
+        else{
+            //status pending type user assigned to consult name
+            List<UserEntity> allUser = userDao.getAllUser();
+
+        }
+
+
+        String jsonResponse = gson.toJson(responseObject);
+
+        response.getWriter().write(jsonResponse);
+
+
+
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response)

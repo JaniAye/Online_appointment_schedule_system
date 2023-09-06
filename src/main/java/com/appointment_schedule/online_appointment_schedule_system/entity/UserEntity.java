@@ -38,6 +38,10 @@ public class UserEntity {
         this.password = password;
     }
 
+    public UserEntity(String field) {
+        this.field = field;
+    }
+
     public UserEntity(String nic, String name, Date dob, String type, String emailOrPhone, String password, String field) {
         this.nic = nic;
         this.name = name;
@@ -47,6 +51,8 @@ public class UserEntity {
         this.password = password;
         this.field = field;
     }
+
+
 
     @Basic
     @Column(name = "field")

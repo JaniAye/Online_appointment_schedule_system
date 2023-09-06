@@ -44,9 +44,9 @@
       form.submit();
     }
     document.getElementById("btnSign").addEventListener("click", function() {
-     // window.location.href = "dashboard.jsp";
+     window.location.href = "dashboard.jsp";
     //  window.location.href = "consultantDashboard.jsp";
-      window.location.href = `adminDashboard.jsp`;
+      //window.location.href = `adminDashboard.jsp`;
     });
   </script>
 </body>

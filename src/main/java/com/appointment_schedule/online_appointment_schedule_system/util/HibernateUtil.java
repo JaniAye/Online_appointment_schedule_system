@@ -2,6 +2,7 @@ package com.appointment_schedule.online_appointment_schedule_system.util;
 
 import java.util.Properties;
 
+import com.appointment_schedule.online_appointment_schedule_system.entity.AppointmentEntity;
 import com.appointment_schedule.online_appointment_schedule_system.entity.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -33,6 +34,7 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(UserEntity.class);
+                configuration.addAnnotatedClass(AppointmentEntity.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
