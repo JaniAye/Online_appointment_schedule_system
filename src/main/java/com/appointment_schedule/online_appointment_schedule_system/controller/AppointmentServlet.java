@@ -76,7 +76,24 @@ public class AppointmentServlet extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Map<String, Object> responseObject = new HashMap<>();
+        Gson gson = new Gson();
+        response.setContentType("application/json");
 
+        String category = request.getParameter("category");
+        String date = request.getParameter("date");
+        String slot = request.getParameter("slot");
+        String getType = request.getParameter("getType");
+
+
+        System.out.println("getType = " + getType);
+        List<AppointmentEntity> allapps = dao.getAllApps("consultant");
+
+        responseObject.put("result", "success");
+        responseObject.put("appointmentList", allapps);
+        String jsonResponse = gson.toJson(responseObject);
+
+        response.getWriter().write(jsonResponse);
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response)

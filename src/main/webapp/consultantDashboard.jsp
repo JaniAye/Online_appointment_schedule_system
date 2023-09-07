@@ -204,7 +204,7 @@
         </div>
         <div class="innerTblDiv" >
 
-            <div style="text-align: center;  ">
+            <div style="text-align: center;">
                 <div id=tblApprov></div>
             </div>
 
@@ -344,7 +344,62 @@
     }
 
     function add_data() {
+        m_row="";
+        lineno=1;
+        $.ajax({
+            url: "Appointment",
+            type: "GET",
+            data: {
+                getType :  "GetAppointments"
+            },
+            success: function(response) {
 
+                if (response.result === "empty"){
+                    alert("Please provide all details...");
+                }
+                if (response.result === "fail"){
+                    alert("Request unSuccessful...");
+                }
+                if (response.result === "success"){
+
+
+                    for (var i = 0; i < response.appointmentList.length; i++) {
+                        var appointment = response.appointmentList[i];
+
+                        m_row=m_row+'<TR  >';
+                        m_row=m_row+'<TD ALIGN="Center">'+appointment.user_name+'</TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+appointment.appid+'<INPUT TYPE="Hidden" NAME="DEALER'+lineno+'" VALUE="'+appointment.appid+'"></TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+appointment.schedule_date+'<INPUT TYPE="Hidden" NAME="DEALNO'+lineno+'" VALUE="'+appointment.schedule_date+'"></TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ appointment.time +'<INPUT TYPE="Hidden" NAME="DEALNO'+ appointment.schedule_date+'" VALUE="'+ appointment.time+'"></TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ appointment.time +'<INPUT TYPE="Hidden" NAME="DEALNO'+ appointment.time +'" VALUE="'+ appointment.time+'"></TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ appointment.time +'<INPUT TYPE="Hidden" NAME="DEALNO'+ appointment.time+'" VALUE="'+ appointment.time+'"></TD>';
+
+                        lineno++;
+
+                    }
+
+                    m_writedata ='<BR><TABLE WIDTH="1550"  class="table table-sm table-bordered table-hover  ng-w-j-grid">'+
+                        '<TR><td colspan="15" ALIGN="Center" class="bg-primary text-white"><B>Pending Appointment </B></td></TR>'+
+                        '<TR class="bg-primary text-white">'+
+                        '<TD WIDTH="200" ALIGN="Center">User Name</TD>'+
+                        '<TD WIDTH="80" ALIGN="Center">Age</TD>'+
+                        '<TD WIDTH="200" ALIGN="Center">Appoinment Date</TD>'+
+                        '<TD WIDTH="200" ALIGN="Center">Time slot</TD>'+
+                        '<TD WIDTH="80" ALIGN="Center">Option</TD>'+
+                        '<TD WIDTH="80" ALIGN="Center">Option</TD>'+
+                        '</TR>' +
+                        m_row+
+                    '</TABLE>';
+                    tblApprov.innerHTML=m_writedata;
+
+                 //   alert("There are no available consultants at this moment..." +  response.appointmentList);
+
+                }
+            },
+            error: function() {
+                //showAlert("An error occurred while processing the request.");
+            }
+        });
        var vec_pos=0;
        var m_size=4;
        var m_row=1;
@@ -356,19 +411,7 @@
 
           //  document.Form1.Hid_rows.value=lineno;
 
-            m_writedata ='<BR><TABLE WIDTH="1350"  class="table table-sm table-bordered table-hover  ng-w-j-grid">'+
-                '<TR><td colspan="15" ALIGN="Center" class="bg-primary text-white"><B>Pending Appointment </B></td></TR>'+
-                '<TR class="bg-primary text-white">'+
-                '<TD WIDTH="100" ALIGN="Center">User Name</TD>'+
-                '<TD WIDTH="10" ALIGN="Center">Age</TD>'+
-                '<TD WIDTH="100" ALIGN="Center">Appoinment Date</TD>'+
-                '<TD WIDTH="100" ALIGN="Center">Time slot</TD>'+
-                '<TD WIDTH="50" ALIGN="Center">Option</TD>'+
-                '<TD WIDTH="50" ALIGN="Center">Option</TD>'+
-                '</TR>' +
-              //  m_row+
-                '</TABLE>';
-            tblApprov.innerHTML=m_writedata;
+
         }
     }
 

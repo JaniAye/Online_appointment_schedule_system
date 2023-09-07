@@ -198,34 +198,6 @@ public class UserDao {
         return listOfUser;
     }
 
-    public  List<UserEntity> getAllApps(String name) {
 
-        Transaction transaction = null;
-        List<UserEntity> listOfUser = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-            System.out.println("awaaa--7888888----------*/**/*/");
-
-            String sqlQuery = "SELECT * FROM appointment WHERE status = 'Pending' AND consultant_name = :consultantName ";
-            SQLQuery<UserEntity> query = session.createNativeQuery(sqlQuery, UserEntity.class);
-
-            query.setParameter("consultantName", name);
-
-            // Execute the query
-             listOfUser = query.getResultList();
-            System.out.println("--------------+++89");
-
-
-            // commit transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return listOfUser;
-    }
 
 }

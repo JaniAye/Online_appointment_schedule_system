@@ -79,26 +79,17 @@ public class UserServlet extends HttpServlet {
         Gson gson = new Gson();
         response.setContentType("application/json");
 
-
+        String category = request.getParameter("category");
+        String date = request.getParameter("date");
+        String slot = request.getParameter("slot");
         String getType = request.getParameter("getType");
-        if (getType.equals("Consultant")){
-            String category = request.getParameter("category");
-            String date = request.getParameter("date");
-            String slot = request.getParameter("slot");
-
-            UserEntity user = new UserEntity(category);
-            UserEntity userName = userDao.getUserNic(user);
-
-            responseObject.put("result", "success");
-            responseObject.put("userNameCons", userName.getName());
-        }
-        else{
-            //status pending type user assigned to consult name
-            List<UserEntity> allUser = userDao.getAllUser();
-
-        }
 
 
+        UserEntity user = new UserEntity(category);
+        UserEntity userName = userDao.getUserNic(user);
+
+        responseObject.put("result", "success");
+        responseObject.put("userNameCons", userName.getName());
         String jsonResponse = gson.toJson(responseObject);
 
         response.getWriter().write(jsonResponse);

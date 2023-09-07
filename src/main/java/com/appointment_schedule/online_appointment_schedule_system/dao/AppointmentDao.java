@@ -3,6 +3,7 @@ package com.appointment_schedule.online_appointment_schedule_system.dao;
 import com.appointment_schedule.online_appointment_schedule_system.entity.AppointmentEntity;
 import com.appointment_schedule.online_appointment_schedule_system.entity.UserEntity;
 import com.appointment_schedule.online_appointment_schedule_system.util.HibernateUtil;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -121,6 +122,36 @@ public class AppointmentDao {
             // get an user object
 
             listOfUser = session.createQuery("from appointment").getResultList();
+
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return listOfUser;
+    }
+
+    public  List<AppointmentEntity> getAllApps(String name) {
+
+        Transaction transaction = null;
+        List<AppointmentEntity> listOfUser = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            System.out.println("awaaa--7888888----------*/**/*/"+name);
+
+            String sqlQuery = "SELECT * FROM appointment WHERE status = 'Pending' AND consultant_name = 'consultant' ";  //:consultantName
+            SQLQuery<AppointmentEntity> query = session.createNativeQuery(sqlQuery, AppointmentEntity.class);
+
+           // query.setParameter("consultantName", name);
+
+            // Execute the query
+            listOfUser = query.getResultList();
+            System.out.println("--------------+++89");
+
 
             // commit transaction
             transaction.commit();

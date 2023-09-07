@@ -195,7 +195,7 @@
         <li><a href="#" id="dashboard-button" class="active">Dashboard</a></li>
         <li><a href="#" id="appointments-button">Appointments</a></li>
         <li><a href="#" id="profile-button">Profile</a></li>
-        <li><a href="#" id="settings-button">Settings</a></li>
+        <li><a href="#" id="settings-button">Sign Out</a></li>
     </ul>
 </div>
 
