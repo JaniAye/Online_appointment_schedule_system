@@ -141,7 +141,6 @@ public class AppointmentDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            System.out.println("awaaa--7888888----------*/**/*/"+name);
 
             String sqlQuery = "SELECT * FROM appointment WHERE status = 'Pending' AND consultant_name = 'consultant' ";  //:consultantName
             SQLQuery<AppointmentEntity> query = session.createNativeQuery(sqlQuery, AppointmentEntity.class);
@@ -150,7 +149,6 @@ public class AppointmentDao {
 
             // Execute the query
             listOfUser = query.getResultList();
-            System.out.println("--------------+++89");
 
 
             // commit transaction

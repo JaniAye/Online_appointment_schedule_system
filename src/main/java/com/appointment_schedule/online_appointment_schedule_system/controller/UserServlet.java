@@ -79,17 +79,31 @@ public class UserServlet extends HttpServlet {
         Gson gson = new Gson();
         response.setContentType("application/json");
 
-        String category = request.getParameter("category");
-        String date = request.getParameter("date");
-        String slot = request.getParameter("slot");
+
         String getType = request.getParameter("getType");
+       System.out.println("getType ---------------------------------->= " + getType);
+        if (getType.equals("Consultant")){
+            String category = request.getParameter("category");
+            String date = request.getParameter("date");
+            String slot = request.getParameter("slot");
+            UserEntity user = new UserEntity(category);
+            UserEntity userName = userDao.getUserNic(user);
+            responseObject.put("result", "success");
+            responseObject.put("userNameCons", userName.getName());
+        }
+        else if (getType.equals("getFromUn")){
+
+            String userName = request.getParameter("userName");
+
+            String age = userDao.getDob(userName);
+            responseObject.put("result", "success");
+            responseObject.put("Age", age);
+
+        }
 
 
-        UserEntity user = new UserEntity(category);
-        UserEntity userName = userDao.getUserNic(user);
 
-        responseObject.put("result", "success");
-        responseObject.put("userNameCons", userName.getName());
+
         String jsonResponse = gson.toJson(responseObject);
 
         response.getWriter().write(jsonResponse);
@@ -98,29 +112,6 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void listUser(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ServletException {
-        List<UserEntity> listUser = userDao.getAllUser();
-        request.setAttribute("listUser", listUser);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        UserEntity existingUser = userDao.getUser(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-        request.setAttribute("user", existingUser);
-        dispatcher.forward(request, response);
-
-    }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ParseException {

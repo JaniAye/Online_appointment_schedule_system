@@ -5,6 +5,7 @@ import com.appointment_schedule.online_appointment_schedule_system.util.Hibernat
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
@@ -144,6 +145,36 @@ public class UserDao {
             e.printStackTrace();
         }
         return user2;
+    }
+    public String getDob(String name) {
+        System.out.println("name ::: = " + name);
+        Transaction transaction = null;
+        UserEntity user2 = null;
+     String age="";
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            transaction = session.beginTransaction();
+
+            String sqlQuery = "SELECT  YEAR(CURRENT_DATE()) - YEAR(dob) - (DATE_FORMAT(CURRENT_DATE(), '%m%d') < DATE_FORMAT(dob, '%m%d')) AS age FROM user WHERE type = 'user' AND name = :consultanname ";
+            NativeQuery query = session.createNativeQuery(sqlQuery);
+
+            query.setParameter("consultanname", name);
+
+            age = ""+query.uniqueResult();
+
+            // commit transaction
+            transaction.commit();
+        }catch (NoResultException e) {
+
+            System.out.println("No data found for the given criteria.");
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return age;
     }
 
     public UserEntity getLogin(UserEntity user){

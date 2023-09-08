@@ -345,15 +345,22 @@
     window.history.pushState(null, null, "dashboard.jsp");
 
     function changeStatus(){
+        var dropdown = document.getElementById("txtSlot");
+        var selectedOption = dropdown.options[dropdown.selectedIndex];
+        var selectedText = selectedOption.text;
+
+        var category2 = document.getElementById("job-category2");
+        var selectedcategory2 = category2.options[category2.selectedIndex];
+        var category2Text = selectedcategory2.text;
 
         document.getElementById("txtStatus").value="Pending";
         $.ajax({
             url: "User",
             type: "GET",
             data: {
-                category:  document.getElementById("job-category2").value,
+                category: category2Text,
                 date:  document.getElementById("sec-datepicker-input8").value,
-                slot :  document.getElementById("txtSlot").value,
+                slot :  selectedText,
                 getType :  "Consultant"
             },
             success: function(response) {
@@ -404,14 +411,24 @@
 
 
         }else{
+
+            var dropdown = document.getElementById("txtSlot");
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedText = selectedOption.text;
+
+            var category2 = document.getElementById("job-category2");
+            var selectedcategory2 = category2.options[category2.selectedIndex];
+            var category2Text = selectedcategory2.text;
+
+
             $.ajax({
                 url: "Appointment",
                 type: "POST",
                 data: {
                     userName:  document.getElementById("txtUn").value,
-                    category:  document.getElementById("job-category2").value,
+                    category:  category2Text,
                     date:  document.getElementById("sec-datepicker-input8").value,
-                    slot :  document.getElementById("txtSlot").value,
+                    slot :  selectedText,
                     consult: document.getElementById("txtConsultName").value,
                     status: document.getElementById("txtStatus").value
                 },
@@ -488,7 +505,7 @@
         appointmentUI.style.display = 'none';
         profileUI.style.display = 'none';
         settingsUI.style.display = 'block';
-
+        window.location.href = "login.jsp";
         // Update active button
         dashboardButton.classList.remove('active');
         appointmentsButton.classList.remove('active');

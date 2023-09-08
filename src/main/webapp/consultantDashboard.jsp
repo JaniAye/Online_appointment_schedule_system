@@ -176,7 +176,7 @@
         <li><a href="#" id="dashboard-button" class="active">Dashboard</a></li>
         <li><a href="#" id="appointments-button" onclick="apmntTbl()">Appointments</a></li>
         <li><a href="#" id="profile-button">Profile</a></li>
-        <li><a href="#" id="settings-button">Settings</a></li>
+        <li><a href="#" id="settings-button">Sign Out</a></li>
     </ul>
 </div>
 
@@ -319,7 +319,7 @@
         appointmentUI.style.display = 'none';
         profileUI.style.display = 'none';
         settingsUI.style.display = 'block';
-
+        window.location.href = "login.jsp";
         // Update active button
         dashboardButton.classList.remove('active');
         appointmentsButton.classList.remove('active');
@@ -361,14 +361,39 @@
                     alert("Request unSuccessful...");
                 }
                 if (response.result === "success"){
-
+                    var ageUser="";
 
                     for (var i = 0; i < response.appointmentList.length; i++) {
                         var appointment = response.appointmentList[i];
 
-                        m_row=m_row+'<TR  >';
+                        $.ajax({
+                            url: "User",
+                            type: "GET",
+                            data: {
+                                userName:  appointment.user_name,
+                                getType :  "getFromUn"
+                            },
+                            success: function(response) {
+
+                                if (response.result === "empty"){
+
+                                }
+                                if (response.result === "fail"){
+
+                                }
+                                if (response.result === "success"){
+                                    ageUser=response.Age;
+                                }
+                            },
+                            error: function() {
+                                //showAlert("An error occurred while processing the request.");
+                            }
+                        });
+
+
+                        m_row=m_row+'<TR>';
                         m_row=m_row+'<TD ALIGN="Center">'+appointment.user_name+'</TD>';
-                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+appointment.appid+'<INPUT TYPE="Hidden" NAME="DEALER'+lineno+'" VALUE="'+appointment.appid+'"></TD>';
+                        m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ageUser+'<INPUT TYPE="Hidden" NAME="DEALER'+lineno+'" VALUE="'+appointment.appid+'"></TD>';
                         m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+appointment.schedule_date+'<INPUT TYPE="Hidden" NAME="DEALNO'+lineno+'" VALUE="'+appointment.schedule_date+'"></TD>';
                         m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ appointment.time +'<INPUT TYPE="Hidden" NAME="DEALNO'+ appointment.schedule_date+'" VALUE="'+ appointment.time+'"></TD>';
                         m_row=m_row+'<TD ALIGN="Center" STYLE="{color: black;  }">'+ appointment.time +'<INPUT TYPE="Hidden" NAME="DEALNO'+ appointment.time +'" VALUE="'+ appointment.time+'"></TD>';
